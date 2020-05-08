@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список дел</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<hr>
+
+{% for task in tasks %}
+<div class=" card-group container p-4 my-4 border jumbotron jumbotron-fluid">
+    <div class="card" style="">
+    <a class="btn btn-primary" href="{% url 'update_task' task.id %}">Обновить</a>
+    <a class="btn btn-danger" href="{% url 'delete' task.id %}">Удалить</a>
+    {% if task.complete == True %}
+    <strike class="card-body bg-success">{{ task.title }}</strike>
+    {% else %}
+    <span class="card-body bg-warning">{{ task.title }}</span>
+    {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+
+
+asadasdasd
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список дел</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/icon.ico' %}"/>
+
+</head>
+<body>
+
+<label>Новая задача в IT отдел</label><br>
+<form method="POST" action="/" >
+    {% csrf_token %}
+    <p><input placeholder="Задача" class="form-control" {{ form.title }} </p>
+    <p><label> Выбрать отдел {{  form.from_devision }}  </label></p>
+    <p><label> Важность задачи {{ form.importance }}</label></p>
+
+    <input type="submit" class="btn btn-primary" name="Create Task" placeholder="Aaaa">
+</form>
+
+<hr>
+<a href="http://localhost:8000/complete/" class="btn btn-success">Выполненые задачи</a>
+<hr>
+
+{% for task in tasks %}
+<div class=" card-group container p-4 my-4 border jumbotron jumbotron-fluid">
+    <div class="card" style="">
+        <!-- Модальное окно !-->
+
+
+        <!-- Модальное окно !-->
+    <a class="btn btn-primary" style="margin-bottom:10px" href="{% url 'update_task' task.id %}">Обновить</a>
+    <a class="btn btn-danger" style="margin-bottom:10px" href="{% url 'delete' task.id %}">Удалить</a>
+    {% if task.importance.name == "Важная" %}
+            <span class="card-body bg-warning"><b>{{ task.from_devision }}:</b> {{ task.title }}</span>
+    {% elif task.importance.name == "Срочная" %}
+            <span class="card-body bg-danger"><b>{{ task.from_devision }}:</b> {{ task.title }}</span>
+    {% else %}
+        <span class="card-body bg-success"><b>{{ task.from_devision }}:</b> {{ task.title }}</span>
+    {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+</body>
+</html>
